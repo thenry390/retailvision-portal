@@ -1,4 +1,3 @@
-import type { Key } from 'react';
 import { Input, Progress, Select, Table, Tag } from "antd";
 import { Plus, Search } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -49,7 +48,7 @@ export default function ProgramsPage() {
       title: "STATUS",
       dataIndex: "status",
       filters: statusOptions.map((value) => ({ text: value, value })),
-      onFilter: (value: boolean | Key, record: (typeof programs)[number]) => record.status === String(value),
+      onFilter: (value: string | number | boolean, record: typeof programs[number]) => record.status === value,
       render: (value: ProgramStatus) => <Tag className={`program-tag ${value.toLowerCase()}`}>{value}</Tag>
     },
     {
