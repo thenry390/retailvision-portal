@@ -15,10 +15,14 @@ import {
 } from "lucide-react";
 import { Progress, Tabs, Tag } from "antd";
 import { Link, useParams } from "react-router-dom";
-import { chicagoAssets, chicagoTimeline, stores } from "../data/mockData";
+import { useRetailData } from "../hooks/useRetailData";
+import DataState from "../components/common/DataState";
 
 export default function StoreDetailPage() {
+  const { data, loading, error, retry } = useRetailData();
   const { storeId } = useParams();
+  if (loading || error || !data) return <DataState loading={loading} error={error} retry={retry} />;
+  const { stores, assets: chicagoAssets, timeline: chicagoTimeline } = data.stores;
   const store = stores.find((item) => item.id === storeId) ?? stores[0];
 
   const overview = (

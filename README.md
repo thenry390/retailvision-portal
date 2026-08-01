@@ -68,3 +68,7 @@ Routes:
 
 ## Sprint 3 — Execution Tracking
 Sprint 3 adds an executive execution control center with KPIs, planned-versus-actual trends, portfolio health, capacity planning, milestone tracking, and a RAID log. See `docs/SPRINT-3-RELEASE-NOTES.md`.
+
+## Sprint 4 API architecture
+
+RetailVision now loads product data asynchronously through `apiClient` → domain services → `RetailDataProvider` → pages. The current adapter uses local fixture data while preserving REST-style endpoint boundaries. To test the error and retry state, open any portal URL with `?apiError=1`.

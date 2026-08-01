@@ -2,9 +2,13 @@ import { Input, Progress, Select, Table, Tag } from "antd";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { stores } from "../data/mockData";
+import { useRetailData } from "../hooks/useRetailData";
+import DataState from "../components/common/DataState";
+import type { StoreRecord } from "../models/retailvision";
 
 export default function StoresPage() {
+  const { data, loading, error, retry } = useRetailData();
+  const stores = data?.stores.stores ?? [];
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<string | undefined>();
 
@@ -22,7 +26,7 @@ export default function StoresPage() {
     {
       title: "STORE",
       dataIndex: "name",
-      render: (_: string, record: typeof stores[number]) => (
+      render: (_: string, record: StoreRecord) => (
         <Link to={`/portal/stores/${record.id}`} className="table-primary table-link">
           <strong>{record.name}</strong>
           <span>{record.id}</span>
@@ -31,7 +35,7 @@ export default function StoresPage() {
     },
     {
       title: "LOCATION",
-      render: (_: string, record: typeof stores[number]) => `${record.city}, ${record.state}`
+      render: (_: string, record: StoreRecord) => `${record.city}, ${record.state}`
     },
     { title: "PROGRAM", dataIndex: "program" },
     {
@@ -47,6 +51,8 @@ export default function StoresPage() {
       render: (value: number) => <Progress percent={value} size="small" strokeColor="#f4e81a" />
     }
   ];
+
+  if (loading || error || !data) return <DataState loading={loading} error={error} retry={retry} />;
 
   return (
     <section className="page">

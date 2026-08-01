@@ -5,15 +5,17 @@ import {
   Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart,
   ResponsiveContainer, Tooltip, XAxis, YAxis
 } from "recharts";
-import {
-  executiveMilestones, executionTrend, portfolioHealth, raidItems, resourceCapacity,
-  type RaidItem, type RaidSeverity, type RaidStatus, type RaidType
-} from "../data/mockData";
+import { useRetailData } from "../hooks/useRetailData";
+import DataState from "../components/common/DataState";
+import type { RaidItem, RaidSeverity, RaidStatus, RaidType } from "../models/retailvision";
 
 const severityRank: Record<RaidSeverity, number> = { Critical: 4, High: 3, Medium: 2, Low: 1 };
 const healthColors = ["#a6dca8", "#f4e81a", "#ff8c8c"];
 
 export default function ExecutionPage() {
+  const { data, loading, error, retry } = useRetailData();
+  if (loading || error || !data) return <DataState loading={loading} error={error} retry={retry} />;
+  const { executiveMilestones, executionTrend, portfolioHealth, raidItems, resourceCapacity } = data.execution;
   const openRaid = raidItems.filter((item) => item.status !== "Closed");
   const critical = raidItems.filter((item) => item.severity === "Critical").length;
   const averageCapacity = Math.round(resourceCapacity.reduce((sum, item) => sum + item.allocated, 0) / resourceCapacity.length);

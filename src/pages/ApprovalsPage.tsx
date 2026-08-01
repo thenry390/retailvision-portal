@@ -1,7 +1,11 @@
 import { Check, MessageSquareText, X } from "lucide-react";
-import { approvals } from "../data/mockData";
+import { useRetailData } from "../hooks/useRetailData";
+import DataState from "../components/common/DataState";
 
 export default function ApprovalsPage() {
+  const { data, loading, error, retry } = useRetailData();
+  if (loading || error || !data) return <DataState loading={loading} error={error} retry={retry} />;
+  const approvals = data.approvals;
   return (
     <section className="page">
       <div className="page-heading">

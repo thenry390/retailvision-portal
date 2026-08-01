@@ -1,10 +1,16 @@
 import { Progress, Table, Tag } from "antd";
 import { ArrowLeft, Check, Circle, Clock3, Download, MapPin } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { programActivities, programAssets, programMilestones, programs, stores } from "../data/mockData";
+import { useRetailData } from "../hooks/useRetailData";
+import DataState from "../components/common/DataState";
+import type { ProgramRecord, StoreRecord } from "../models/retailvision";
 
 export default function ProgramDetailPage() {
+  const { data, loading, error, retry } = useRetailData();
   const { programId } = useParams();
+  if (loading || error || !data) return <DataState loading={loading} error={error} retry={retry} />;
+  const { programs, milestones: programMilestones, assets: programAssets, activities: programActivities } = data.programs;
+  const { stores } = data.stores;
   const program = programs.find((item) => item.id === programId);
   if (!program) return <Navigate to="/portal/programs" replace />;
 
@@ -68,8 +74,8 @@ export default function ProgramDetailPage() {
       <article className="panel detail-table-panel">
         <div className="panel-heading detail-section-heading"><div><span className="eyebrow">FIELD EXECUTION</span><h2>Assigned stores</h2></div><span>{program.storeCount} LOCATIONS</span></div>
         <Table rowKey="id" pagination={false} dataSource={storeRows} scroll={{ x: 760 }} columns={[
-          { title: "STORE", render: (_: string, record: typeof stores[number]) => <Link className="table-primary table-link" to={`/portal/stores/${record.id}`}><strong>{record.name}</strong><span>{record.id}</span></Link> },
-          { title: "LOCATION", render: (_: string, record: typeof stores[number]) => <span className="location-cell"><MapPin size={13}/>{record.city}, {record.state}</span> },
+          { title: "STORE", render: (_: string, record: StoreRecord) => <Link className="table-primary table-link" to={`/portal/stores/${record.id}`}><strong>{record.name}</strong><span>{record.id}</span></Link> },
+          { title: "LOCATION", render: (_: string, record: StoreRecord) => <span className="location-cell"><MapPin size={13}/>{record.city}, {record.state}</span> },
           { title: "STATUS", dataIndex: "status", render: (value: string) => <Tag className={`store-tag ${value.toLowerCase().replace(" ", "-")}`}>{value}</Tag> },
           { title: "COMPLETION", dataIndex: "completion", render: (value: number) => <Progress percent={value} size="small" strokeColor="#f4e81a" /> }
         ]}/>
@@ -78,7 +84,7 @@ export default function ProgramDetailPage() {
       <article className="panel detail-table-panel">
         <div className="panel-heading detail-section-heading"><div><span className="eyebrow">PRODUCTION SCOPE</span><h2>Program assets</h2></div><span>{programAssets.length} ASSET TYPES</span></div>
         <Table rowKey="id" pagination={false} dataSource={programAssets} scroll={{ x: 720 }} columns={[
-          { title: "ASSET", render: (_: string, record: typeof programAssets[number]) => <div className="table-primary"><strong>{record.name}</strong><span>{record.id}</span></div> },
+          { title: "ASSET", render: (_: string, record: (typeof programAssets)[number]) => <div className="table-primary"><strong>{record.name}</strong><span>{record.id}</span></div> },
           { title: "TYPE", dataIndex: "type" },
           { title: "QUANTITY", dataIndex: "quantity" },
           { title: "STATUS", dataIndex: "status", render: (value: string) => <Tag className={`asset-status-tag ${value.toLowerCase().replace(" ", "-")}`}>{value}</Tag> }

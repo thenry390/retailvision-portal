@@ -2,11 +2,15 @@ import { Input, Progress, Select, Table, Tag } from "antd";
 import { Plus, Search } from "lucide-react";
 import { useMemo, useState, type Key } from "react";
 import { Link } from "react-router-dom";
-import { programs, type ProgramStatus } from "../data/mockData";
+import { useRetailData } from "../hooks/useRetailData";
+import DataState from "../components/common/DataState";
+import type { ProgramRecord, ProgramStatus } from "../models/retailvision";
 
 const statusOptions: ProgramStatus[] = ["Planning", "Production", "Shipping", "Installing", "Complete", "Delayed"];
 
 export default function ProgramsPage() {
+  const { data, loading, error, retry } = useRetailData();
+  const programs = data?.programs.programs ?? [];
   const [query, setQuery] = useState("");
   const [customer, setCustomer] = useState<string | undefined>();
   const [status, setStatus] = useState<ProgramStatus | undefined>();
@@ -30,8 +34,8 @@ export default function ProgramsPage() {
     {
       title: "PROGRAM",
       dataIndex: "name",
-      sorter: (a: typeof programs[number], b: typeof programs[number]) => a.name.localeCompare(b.name),
-      render: (_: string, record: typeof programs[number]) => (
+      sorter: (a: ProgramRecord, b: ProgramRecord) => a.name.localeCompare(b.name),
+      render: (_: string, record: ProgramRecord) => (
         <Link to={`/portal/programs/${record.id}`} className="table-primary table-link">
           <strong>{record.name}</strong>
           <span>{record.id} · {record.region}</span>
@@ -41,14 +45,14 @@ export default function ProgramsPage() {
     {
       title: "CUSTOMER",
       dataIndex: "customer",
-      sorter: (a: typeof programs[number], b: typeof programs[number]) => a.customer.localeCompare(b.customer)
+      sorter: (a: ProgramRecord, b: ProgramRecord) => a.customer.localeCompare(b.customer)
     },
     { title: "OWNER", dataIndex: "owner" },
     {
       title: "STATUS",
       dataIndex: "status",
       filters: statusOptions.map((value) => ({ text: value, value })),
-      onFilter: (value: boolean | Key, record: typeof programs[number]) => record.status === String(value),
+      onFilter: (value: boolean | Key, record: ProgramRecord) => record.status === String(value),
       render: (value: ProgramStatus) => <Tag className={`program-tag ${value.toLowerCase()}`}>{value}</Tag>
     },
     {
@@ -58,15 +62,17 @@ export default function ProgramsPage() {
     {
       title: "STORES",
       dataIndex: "storeCount",
-      sorter: (a: typeof programs[number], b: typeof programs[number]) => a.storeCount - b.storeCount
+      sorter: (a: ProgramRecord, b: ProgramRecord) => a.storeCount - b.storeCount
     },
     {
       title: "COMPLETION",
       dataIndex: "completion",
-      sorter: (a: typeof programs[number], b: typeof programs[number]) => a.completion - b.completion,
+      sorter: (a: ProgramRecord, b: ProgramRecord) => a.completion - b.completion,
       render: (value: number) => <Progress percent={value} size="small" strokeColor="#f4e81a" />
     }
   ];
+
+  if (loading || error || !data) return <DataState loading={loading} error={error} retry={retry} />;
 
   return (
     <section className="page">

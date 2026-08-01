@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
 import App from "./App";
+import { RetailDataProvider } from "./hooks/useRetailData";
 import { AuthProvider } from "./features/auth/AuthContext";
 import "./styles.css";
 
@@ -22,7 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     >
       <BrowserRouter>
         <AuthProvider>
-          <App />
+          <RetailDataProvider>
+            <App />
+          </RetailDataProvider>
         </AuthProvider>
       </BrowserRouter>
     </ConfigProvider>

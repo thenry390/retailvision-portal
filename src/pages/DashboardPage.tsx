@@ -1,6 +1,7 @@
 import { AlertTriangle, ArrowUpRight, CheckCircle2, Clock3, Store } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { approvals, programData } from "../data/mockData";
+import { useRetailData } from "../hooks/useRetailData";
+import DataState from "../components/common/DataState";
 
 const metrics = [
   { label: "Total Stores", value: "1,420", detail: "+18 this quarter", icon: Store },
@@ -10,6 +11,9 @@ const metrics = [
 ];
 
 export default function DashboardPage() {
+  const { data, loading, error, retry } = useRetailData();
+  if (loading || error || !data) return <DataState loading={loading} error={error} retry={retry} />;
+  const { approvals, programData } = data.dashboard;
   return (
     <section className="page">
       <div className="page-heading">
