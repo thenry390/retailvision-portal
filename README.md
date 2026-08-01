@@ -64,3 +64,7 @@ Routes:
 
 - `/portal/programs`
 - `/portal/programs/:programId`
+
+
+## Sprint 3 — Execution Tracking
+Sprint 3 adds an executive execution control center with KPIs, planned-versus-actual trends, portfolio health, capacity planning, milestone tracking, and a RAID log. See `docs/SPRINT-3-RELEASE-NOTES.md`.

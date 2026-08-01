@@ -9,6 +9,7 @@ import ApprovalsPage from "./pages/ApprovalsPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import ProgramsPage from "./pages/ProgramsPage";
 import ProgramDetailPage from "./pages/ProgramDetailPage";
+import ExecutionPage from "./pages/ExecutionPage";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="assets" element={<PlaceholderPage title="Asset Library" />} />
           <Route path="programs" element={<ProgramsPage />} />
           <Route path="programs/:programId" element={<ProgramDetailPage />} />
+          <Route path="execution" element={<ExecutionPage />} />
           <Route path="reports" element={<PlaceholderPage title="Reports" />} />
           <Route path="assistant" element={<PlaceholderPage title="RetailVision AI" />} />
           <Route path="admin" element={<PlaceholderPage title="Administration" />} />

@@ -1,5 +1,6 @@
 import { Progress, Table, Tag } from "antd";
 import { AlertTriangle, CalendarDays, Download, Gauge, Plus, Users } from "lucide-react";
+import type { Key } from "react";
 import {
   Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart,
   ResponsiveContainer, Tooltip, XAxis, YAxis
@@ -29,7 +30,7 @@ export default function ExecutionPage() {
       title: "TYPE",
       dataIndex: "type",
       filters: (["Risk", "Assumption", "Issue", "Dependency"] satisfies RaidType[]).map((value) => ({ text: value, value })),
-      onFilter: (value: string | number | boolean, record: RaidItem) => record.type === value,
+      onFilter: (value: boolean | Key, record: RaidItem) => record.type === String(value),
       render: (value: RaidType) => <Tag className={`raid-tag ${value.toLowerCase()}`}>{value}</Tag>
     },
     { title: "OWNER", dataIndex: "owner" },

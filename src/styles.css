@@ -708,3 +708,41 @@ a { color: inherit; text-decoration: none; }
   .program-facts > div { border-right: 0; border-bottom: 1px solid #282828 !important; }
   .program-facts > div:last-child { border-bottom: 0 !important; }
 }
+
+/* Sprint 3 execution tracking */
+.execution-metrics { margin-bottom: 14px; }
+.execution-chart-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(300px, .7fr); gap: 14px; margin-bottom: 14px; }
+.execution-lower-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); gap: 14px; margin-bottom: 14px; }
+.execution-chart { min-height: 290px; }
+.health-panel { min-height: 410px; }
+.health-legend { display: grid; gap: 11px; border-top: 1px solid #272727; padding-top: 17px; }
+.health-legend div { display: grid; grid-template-columns: 9px 1fr auto; align-items: center; gap: 10px; }
+.health-legend i { width: 8px; height: 8px; border-radius: 50%; }
+.health-legend span { color: #858585; font-size: 12px; }
+.health-legend strong { font-family: "Barlow Condensed"; font-size: 22px; }
+.capacity-panel, .milestone-timeline-panel { min-height: 365px; }
+.executive-timeline { margin-top: 20px; position: relative; }
+.executive-timeline:before { content: ""; position: absolute; left: 7px; top: 7px; bottom: 14px; width: 1px; background: #343434; }
+.executive-milestone { position: relative; display: grid; grid-template-columns: 16px 58px 1fr; gap: 12px; padding: 0 0 20px; }
+.timeline-node { width: 15px; height: 15px; z-index: 1; border: 2px solid #565656; border-radius: 50%; background: #101010; }
+.executive-milestone.complete .timeline-node { background: #a6dca8; border-color: #a6dca8; }
+.executive-milestone.current .timeline-node { background: #f4e81a; border-color: #f4e81a; box-shadow: 0 0 0 4px rgba(244,232,26,.08); }
+.executive-milestone time { color: #f4e81a; font-size: 10px; padding-top: 2px; }
+.executive-milestone div { display: flex; flex-direction: column; gap: 4px; }
+.executive-milestone small { color: #696969; line-height: 1.4; }
+.raid-panel { margin-bottom: 0; }
+.raid-tag, .raid-status { min-width: 86px; text-align: center; background: #171717 !important; border: 1px solid #414141 !important; color: #aaa !important; }
+.raid-tag.issue { color: #ff8c8c !important; border-color: #5a2a2a !important; }
+.raid-tag.risk { color: #f4e81a !important; border-color: #4b4a19 !important; }
+.raid-tag.dependency { color: #8dc8ff !important; }
+.raid-tag.assumption { color: #c0a5ff !important; }
+.raid-status.mitigating { color: #f4e81a !important; }
+.raid-status.watching { color: #8dc8ff !important; }
+.raid-status.closed { color: #a6dca8 !important; }
+.severity { font-size: 11px; font-weight: 700; }
+.severity.critical { color: #ff6f6f; }
+.severity.high { color: #ffb36b; }
+.severity.medium { color: #f4e81a; }
+.severity.low { color: #a6dca8; }
+@media (max-width: 1050px) { .execution-chart-grid, .execution-lower-grid { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .execution-page .detail-actions { display: none; } }

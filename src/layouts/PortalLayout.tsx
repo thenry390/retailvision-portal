@@ -1,6 +1,6 @@
 import {
   Bot, Boxes, ChartNoAxesCombined, ChevronDown, ClipboardCheck, LayoutDashboard,
-  LogOut, Menu, Settings, Store, Workflow
+  LogOut, Menu, Settings, Store, Workflow, Gauge
 } from "lucide-react";
 import { Drawer, Dropdown, type MenuProps } from "antd";
 import { useState } from "react";
@@ -14,6 +14,7 @@ const links = [
   { to: "/portal/assets", label: "Assets", icon: Boxes, roles: ["Program Manager", "Store Manager", "Administrator"] },
   { to: "/portal/approvals", label: "Approvals", icon: ClipboardCheck, roles: ["Program Manager", "Administrator"] },
   { to: "/portal/programs", label: "Programs", icon: Workflow, roles: ["Executive", "Program Manager", "Administrator"] },
+  { to: "/portal/execution", label: "Execution", icon: Gauge, roles: ["Executive", "Program Manager", "Administrator"] },
   { to: "/portal/reports", label: "Reports", icon: ChartNoAxesCombined, roles: ["Executive", "Program Manager", "Administrator"] },
   { to: "/portal/assistant", label: "AI Assistant", icon: Bot, roles: ["Executive", "Program Manager", "Administrator"] },
   { to: "/portal/admin", label: "Administration", icon: Settings, roles: ["Administrator"] }
@@ -34,7 +35,7 @@ function Navigation({ close }: { close?: () => void }) {
 
 const pageNames: Record<string, string> = {
   stores: "Stores", approvals: "Approvals", assets: "Assets", programs: "Programs",
-  reports: "Reports", assistant: "AI Assistant", admin: "Administration"
+  execution: "Execution", reports: "Reports", assistant: "AI Assistant", admin: "Administration"
 };
 
 export default function PortalLayout() {

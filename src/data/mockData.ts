@@ -183,6 +183,7 @@ export const approvals: Approval[] = [
     priority: "Normal"
   }
 ];
+
 export const programData = [
   { name: "Jan", completed: 42, planned: 48 },
   { name: "Feb", completed: 51, planned: 55 },
@@ -254,4 +255,60 @@ export const programActivities = [
   { date: "Jul 28", title: "Shipment wave 4 released", detail: "Materials released for 41 locations." },
   { date: "Jul 26", title: "Asset revision approved", detail: "Entry door vinyl advanced to production." },
   { date: "Jul 24", title: "Readiness exception added", detail: "Milwaukee permit delay flagged for escalation." }
+];
+
+export type RaidType = "Risk" | "Assumption" | "Issue" | "Dependency";
+export type RaidSeverity = "Critical" | "High" | "Medium" | "Low";
+export type RaidStatus = "Open" | "Mitigating" | "Watching" | "Closed";
+
+export interface RaidItem {
+  id: string;
+  type: RaidType;
+  title: string;
+  program: string;
+  owner: string;
+  severity: RaidSeverity;
+  status: RaidStatus;
+  dueDate: string;
+}
+
+export const executionTrend = [
+  { week: "W1", planned: 46, actual: 43 },
+  { week: "W2", planned: 53, actual: 49 },
+  { week: "W3", planned: 61, actual: 58 },
+  { week: "W4", planned: 68, actual: 64 },
+  { week: "W5", planned: 75, actual: 71 },
+  { week: "W6", planned: 82, actual: 79 },
+  { week: "W7", planned: 89, actual: 85 },
+  { week: "W8", planned: 96, actual: 91 }
+];
+
+export const portfolioHealth = [
+  { name: "On track", value: 5 },
+  { name: "Needs attention", value: 2 },
+  { name: "At risk", value: 1 }
+];
+
+export const resourceCapacity = [
+  { team: "Creative", allocated: 88, capacity: 100 },
+  { team: "Production", allocated: 96, capacity: 100 },
+  { team: "Logistics", allocated: 76, capacity: 100 },
+  { team: "Field Ops", allocated: 91, capacity: 100 },
+  { team: "Approvals", allocated: 68, capacity: 100 }
+];
+
+export const raidItems: RaidItem[] = [
+  { id: "RAID-041", type: "Issue", title: "Milwaukee permit resubmission may miss fabrication lock", program: "2026 Exterior Refresh", owner: "Sam Ortiz", severity: "Critical", status: "Mitigating", dueDate: "Aug 2" },
+  { id: "RAID-044", type: "Risk", title: "Production capacity constrained during August peak", program: "Digital Menu Boards", owner: "Jordan Blake", severity: "High", status: "Watching", dueDate: "Aug 6" },
+  { id: "RAID-046", type: "Dependency", title: "Landlord approval required before electrical mobilization", program: "2026 Exterior Refresh", owner: "Maya Chen", severity: "High", status: "Open", dueDate: "Aug 5" },
+  { id: "RAID-049", type: "Assumption", title: "Regional installers remain available for week 34", program: "Wayfinding Modernization", owner: "Eli Warren", severity: "Medium", status: "Watching", dueDate: "Aug 9" },
+  { id: "RAID-052", type: "Risk", title: "Carrier lead time could compress installation window", program: "Seasonal Window Campaign", owner: "Taylor Brooks", severity: "Medium", status: "Open", dueDate: "Aug 12" }
+];
+
+export const executiveMilestones = [
+  { date: "Jul 31", label: "Design lock", program: "Seasonal Window Campaign", state: "complete" },
+  { date: "Aug 5", label: "Landlord approvals", program: "2026 Exterior Refresh", state: "current" },
+  { date: "Aug 9", label: "Production release", program: "Digital Menu Boards", state: "upcoming" },
+  { date: "Aug 16", label: "Wave 1 shipping", program: "Wayfinding Modernization", state: "upcoming" },
+  { date: "Aug 26", label: "Field installation complete", program: "2026 Exterior Refresh", state: "upcoming" }
 ];
